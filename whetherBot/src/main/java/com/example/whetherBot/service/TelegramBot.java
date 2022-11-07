@@ -1,6 +1,7 @@
 package com.example.whetherBot.service;
 
 import com.example.whetherBot.config.BotConfig;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
@@ -8,6 +9,7 @@ import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
 @Component
+@Slf4j
 public class TelegramBot extends TelegramLongPollingBot {
 
     private final BotConfig botConfig;
@@ -51,6 +53,7 @@ public class TelegramBot extends TelegramLongPollingBot {
 
     private void startCommandReceived(long chatId, String name) {
         String answer = "Hi, " + name + ", nice to meet you!";
+        log.info("Replide to user "  + name);
         sendMassage(chatId, answer);
 
 
@@ -65,6 +68,7 @@ public class TelegramBot extends TelegramLongPollingBot {
             execute(message);
         }
         catch (TelegramApiException e){
+            log.error("Error occurred: " + e.getMessage());
 
         }
 
